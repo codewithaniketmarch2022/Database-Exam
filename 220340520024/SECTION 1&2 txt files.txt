@@ -1,0 +1,154 @@
+Section 1
+1) create table DEPT(DEPTNO int,
+DNAME varchar(15),
+LOC varchar(10)
+)
+;
+
+insert into DEPT values(10,'ACCOUNTING','NEWYORK');
+
+insert into DEPT values(20,'RESEARCH','DALLAS');
+
+insert into DEPT values(30,'SALES','CHICAGO');
+
+insert into DEPT values(30,'OPERATIONS','BOSTON');
+
+
+output
+
+
+dept  dname 	LOC
+10	Accounting	NewYork
+20	Research	Dellas
+30	Sales	      Chicago
+40	oPERATIONS	bOSTON
+
+
+
+
+2.create table EMP(EMPNO int,
+ENAME varchar(10),
+JOB varchar(9),
+HIREDATE date,
+SAL float,
+COMM float,
+DEPTNO int
+)
+;
+
+
+
+insert into EMP values(7839,'KING','MANAGER','1991-11-17',5000,NULL,10);
+
+insert into EMP values(7698,'BLAKE','CLERK','1981-05-01',2850,NULL,30);
+
+
+insert into EMP values(7782,'CLARK','MANAGER','1981-06-09',2450,NULL,10);
+
+
+insert into EMP values(7566,'JONES','CLERK','1981-04-02',2975,NULL,20);
+
+
+insert into EMP values(7654,'MARTIN','SALESMAN','1981-09-08',1250,1400,30);
+
+
+insert into EMP values(7499,'ALLEN','SALESMAN','1981-02-20',1600,300,30);
+
+
+
+3) select *
+from EMP
+where SAL between 2500 and 5000
+;
+
+4)SELECT ENAME FROM EMP
+ORDER BY ENAME DESC;
+
+5)SELECT LOWER(JOB) FROM EMP;
+
+6)select EName,length(Ename)from Emp;
+
+7)select d.Deptno,count(e.Deptno)
+from dept d inner join emp e group by d.Deptno;
+
+9)select Ename,instr(Ename,'AR')from Emp;
+
+10)select ename, sal*0.20 As hra from EMP;
+
+
+
+
+SECTION 2
+Q2)
+delimiter //
+create function valid_triangle(s1 float, s2 float, s3 float)
+returns boolean
+deterministic
+begin	
+	 if (s1+s2>s3) and (s1+s3>s2) and (s2+s3>s1) then
+     return true ;
+     else
+     return false;
+     end if ;
+end ; //
+delimiter ;
+
+delimiter //
+create procedure abc(s1 float, s2 float, s3 float)
+begin
+	if valid_triangle(s1,s2,s3) then
+		insert into tempp values (s1,s2,s3,'Valid triangle');
+	else 
+		insert into tempp values (s1,s2,s3,'Invalid triangle');
+	end if ;
+end ;//
+delimiter ;
+
+call abc (7,10,5) ;
+
+create table tempp (
+side1 float,
+side2 float,
+side3 float,
+triangle_status varchar(20));
+
+
+
+
+Q1)create table temp
+(
+  s1 char (10),
+  s2 char(20),
+  ans char(10)
+  );
+  
+  delimiter //
+  create procedure abc(s1 char(20), s2 char (20))
+  begin
+       
+       declare a int(4);
+       set a=locate(s1,s2);
+       if(a != 0) then
+       insert into temp values (s1,s2,'present');
+       else
+       insert into temp values (s1,s2,'absent');
+       end if;
+end; //
+delimiter ;
+
+call abc('aniket','aniketnalavade');
+call abc('abc','wogigabksdf');
+call abc('abc','abdc');
+call abc('abc','mayur');
+
+
+select * from temp;
+drop procedure abc;
+drop table temp;
+
+
+
+
+
+
+
